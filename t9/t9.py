@@ -2,6 +2,7 @@ from collections import defaultdict
 
 import helper
 import itertools
+import operator
 
 # https://towardsdatascience.com/uploading-files-to-google-drive-directly-from-the-terminal-using-curl-2b89db28bb06
 
@@ -12,7 +13,7 @@ def make_tree(words):
 
     def sort(l, r, v, map):
         if r == '':
-            map['$'+l] = v
+            map['$'+l] = int(v)
             return
         if r[0] not in map.keys():
             map[r[0]] = {}
@@ -25,23 +26,26 @@ def make_tree(words):
 
 def predict(tree, numbers):
 
-    def dig_in(map, result):
-        for k, v in map.items():
+    def dig_in(node):
+        result = {}
+        for k, v in node.items():
             if "$" == k[0]:
-                result.append((k[1:], v))
+                result[k[1:]] = v
             else:
-                dig_in(v, result)
+                result.update(dig_in(v))
+        return result
 
     seq = [helper.keymap[r] for r in numbers]
     product = list(itertools.product(*seq))
-    result = []
+    result = {}
     for path in product:
         entrypoint = tree
         for elem in path:
             entrypoint = entrypoint.get(elem, {})
         if entrypoint != {}:
-            dig_in(entrypoint ,result)
-    return result
+            result.update(dig_in(entrypoint))
+
+    return sorted(result.items(), key=operator.itemgetter(1), reverse=True)
 
 
 if __name__ == '__main__':
