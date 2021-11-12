@@ -1,0 +1,5 @@
+hello 5
+can 22
+cart 10
+candy 14
+camera 2
