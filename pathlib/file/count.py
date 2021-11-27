@@ -11,4 +11,4 @@ def count_unique_words(filename):
     return sorted(result.items(), key = operator.itemgetter(1), reverse = True)
 
 if __name__ == '__main__':
-    print(*count_unique_words('hamlet.txt')[:10], sep="\n")
+    print(*count_unique_words('file/hamlet.txt')[:10], sep="\n")
