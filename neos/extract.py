@@ -47,6 +47,7 @@ def load_approaches(cad_json_path):
     with open(cad_json_path) as cad_file:
         cad_json = json.load(cad_file)
         total = len(cad_json['data'])
+        percent = int(total / 100)
         print(f"Loading {total} CloseApproaches:")
         current = 0
         for cad in cad_json['data']:
@@ -56,8 +57,10 @@ def load_approaches(cad_json_path):
                 distance=float(cad[4]),
                 velocity=float(cad[7]),
             ))
-            printProgressBar(current, total)
+            if current % percent == 0:
+                printProgressBar(current, total)
             current += 1
+        printProgressBar(100, 100)
     print("Done.")
     return result
 
