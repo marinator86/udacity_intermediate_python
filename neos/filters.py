@@ -71,6 +71,30 @@ class AttributeFilter:
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.time.date()
+
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.distance
+
+class VelocityFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.velocity
+
+class DiameterFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.diameter
+
+class HazardousFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.hazardous
 
 def create_filters(date=None, start_date=None, end_date=None,
                    distance_min=None, distance_max=None,
@@ -106,8 +130,28 @@ def create_filters(date=None, start_date=None, end_date=None,
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    filters = []
+    if date:
+        filters.append(DateFilter(operator.eq, date))
+    if start_date:
+        filters.append(DateFilter(operator.gt, start_date))
+    if end_date:
+        filters.append(DateFilter(operator.lt, end_date))
+    if distance_min:
+        filters.append(DistanceFilter(operator.gt, distance_min))
+    if distance_max:
+        filters.append(DistanceFilter(operator.lt, distance_max))
+    if velocity_min:
+        filters.append(VelocityFilter(operator.gt, velocity_min))
+    if velocity_max:
+        filters.append(VelocityFilter(operator.lt, velocity_max))
+    if diameter_min:
+        filters.append(DiameterFilter(operator.gt, diameter_min))
+    if diameter_max:
+        filters.append(DiameterFilter(operator.lt, diameter_max))
+    if hazardous:
+        filters.append(HazardousFilter(operator.eq, hazardous))
+    return tuple(filters)
 
 
 def limit(iterator, n=None):
