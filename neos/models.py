@@ -55,7 +55,7 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        return f"NEO {self.fullname}"
+        return f"NEO: (Designation:{self.designation}, Full-Name: {self.fullname}, Diameter: {self.diameter}, Potentially hazardous: {self.hazardous})"
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
