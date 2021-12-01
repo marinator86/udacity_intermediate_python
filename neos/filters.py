@@ -72,30 +72,36 @@ class AttributeFilter:
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
+
 class DateFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.time.date()
+
 
 class DistanceFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.distance
 
+
 class VelocityFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.velocity
+
 
 class DiameterFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.neo.diameter
 
+
 class HazardousFilter(AttributeFilter):
     @classmethod
     def get(cls, approach):
         return approach.neo.hazardous
+
 
 def create_filters(date=None, start_date=None, end_date=None,
                    distance_min=None, distance_max=None,
@@ -150,7 +156,7 @@ def create_filters(date=None, start_date=None, end_date=None,
         filters.append(DiameterFilter(operator.ge, diameter_min))
     if diameter_max:
         filters.append(DiameterFilter(operator.le, diameter_max))
-    if hazardous != None:
+    if hazardous is not None:
         filters.append(HazardousFilter(operator.eq, hazardous))
     return tuple(filters)
 
