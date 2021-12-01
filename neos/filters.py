@@ -74,32 +74,62 @@ class AttributeFilter:
 
 
 class DateFilter(AttributeFilter):
+    """An AttributeFilter specialization for the date attribute."""
+
     @classmethod
     def get(cls, approach):
+        """Return the date attribute for the given approach.
+
+        :param approach: The approach containing the date attribute
+        """
         return approach.time.date()
 
 
 class DistanceFilter(AttributeFilter):
+    """An AttributeFilter specialization for the distance attribute."""
+
     @classmethod
     def get(cls, approach):
+        """Return the distance attribute for the given approach.
+
+        :param approach: The approach containing the distance attribute
+        """
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
+    """An AttributeFilter specialization for the velocity attribute."""
+
     @classmethod
     def get(cls, approach):
+        """Return the velocity attribute for the given approach.
+
+        :param approach: The approach containing the velocity attribute
+        """
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
+    """An AttributeFilter specialization for the diameter attribute."""
+
     @classmethod
     def get(cls, approach):
+        """Return the diameter attribute for the given approach.
+
+        :param approach: The approach linked to the NEO containing the diameter attribute
+        """
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
+    """An AttributeFilter specialization for the hazardous attribute."""
+
     @classmethod
     def get(cls, approach):
+        """Return the hazardous attribute for the given approach.
+
+        :param approach: The approach linked to the NEO containing the hazardous attribute
+        """
         return approach.neo.hazardous
 
 
