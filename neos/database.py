@@ -101,6 +101,6 @@ class NEODatabase:
         :return: A stream of matching `CloseApproach` objects.
         """
         for approach in self._approaches:
-            mapped = [f(approach) for f in filters]
-            if(sum(mapped)) == len(filters):
+            filter_results = [f(approach) for f in filters]
+            if False not in filter_results:
                 yield approach

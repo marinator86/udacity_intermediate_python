@@ -17,6 +17,7 @@ iterator.
 You'll edit this file in Tasks 3a and 3c.
 """
 import operator
+import itertools
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -134,22 +135,22 @@ def create_filters(date=None, start_date=None, end_date=None,
     if date:
         filters.append(DateFilter(operator.eq, date))
     if start_date:
-        filters.append(DateFilter(operator.gt, start_date))
+        filters.append(DateFilter(operator.ge, start_date))
     if end_date:
-        filters.append(DateFilter(operator.lt, end_date))
+        filters.append(DateFilter(operator.le, end_date))
     if distance_min:
-        filters.append(DistanceFilter(operator.gt, distance_min))
+        filters.append(DistanceFilter(operator.ge, distance_min))
     if distance_max:
-        filters.append(DistanceFilter(operator.lt, distance_max))
+        filters.append(DistanceFilter(operator.le, distance_max))
     if velocity_min:
-        filters.append(VelocityFilter(operator.gt, velocity_min))
+        filters.append(VelocityFilter(operator.ge, velocity_min))
     if velocity_max:
-        filters.append(VelocityFilter(operator.lt, velocity_max))
+        filters.append(VelocityFilter(operator.le, velocity_max))
     if diameter_min:
-        filters.append(DiameterFilter(operator.gt, diameter_min))
+        filters.append(DiameterFilter(operator.ge, diameter_min))
     if diameter_max:
-        filters.append(DiameterFilter(operator.lt, diameter_max))
-    if hazardous:
+        filters.append(DiameterFilter(operator.le, diameter_max))
+    if hazardous != None:
         filters.append(HazardousFilter(operator.eq, hazardous))
     return tuple(filters)
 
@@ -163,5 +164,6 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    if not n:
+        return iterator
+    return itertools.islice(iterator, 0, n)
