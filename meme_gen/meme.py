@@ -1,3 +1,4 @@
+"""Contains the meme generator CLI app."""
 import os
 import random
 import argparse
@@ -7,7 +8,7 @@ from QuoteEngine import Ingestor, QuoteModel
 
 
 def generate_meme(path=None, body=None, author=None):
-    """ Generate a meme given an path and a quote """
+    """Generate a meme given an path and a quote."""
     img = None
     quote = None
 
@@ -40,6 +41,7 @@ def generate_meme(path=None, body=None, author=None):
     path = meme.make_meme(img, quote.body, quote.author)
     return path
 
+
 def make_parser():
     """Create an ArgumentParser for this script.
 
@@ -56,6 +58,7 @@ def make_parser():
     parser.add_argument('--path', type=str,
                         help="The path of the meme's image.")
     return parser
+
 
 if __name__ == "__main__":
     parser = make_parser()
