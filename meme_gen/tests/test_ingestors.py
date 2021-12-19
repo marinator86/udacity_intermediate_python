@@ -6,10 +6,8 @@ To run these tests from the project root, run:
 
 """
 import pathlib
-import math
 import unittest
 
-from QuoteEngine import QuoteModel
 from QuoteEngine import CSVIngestor
 from QuoteEngine import DocxIngestor
 from QuoteEngine import PDFIngestor
@@ -24,7 +22,7 @@ TEST_PDF_FILE = TESTS_ROOT / 'DogQuotesPDF.pdf'
 TEST_TXT_FILE = TESTS_ROOT / 'DogQuotesTXT.txt'
 
 
-class TestDatabase(unittest.TestCase):
+class TestIngestors(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         pass

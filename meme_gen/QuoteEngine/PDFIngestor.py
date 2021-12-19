@@ -20,6 +20,10 @@ class PDFIngestor(IngestorInterface):
             raise Exception('cannot ingest exception')
 
         tmp = f'./tmp/{random.randint(0, 100000000)}.txt'
+
+        if not os.path.exists('./tmp'):
+            os.makedirs(tmp)
+
         call = subprocess.call(['pdftotext', path, tmp])
 
         file_ref = open(tmp, "r")
