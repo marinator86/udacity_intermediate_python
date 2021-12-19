@@ -2,6 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import random
 import os
+import math
 
 
 class MemeEngine:
@@ -31,13 +32,9 @@ class MemeEngine:
                 width = 500
             height = int(width * im.size[1] / im.size[0])
             im2 = im.resize((width, height))
-
-            # get a font
             fnt = ImageFont.truetype("./_data/fonts/LilitaOne-Regular.ttf",
-                                     int(width/12))
-            # get a drawing context
+                                     self.calculate_text_size(text, width))
             d = ImageDraw.Draw(im2)
-            # draw multiline text
             d.multiline_text((width * 1/20, height * 4/5),
                              f"\"{text}\"\n{author}",
                              font=fnt, fill=(255, 255, 255))
@@ -45,3 +42,14 @@ class MemeEngine:
             out_path = f"{self.output_dir}/{random.randint(0, 100000000)}.jpg"
             im2.save(out_path)
             return out_path
+
+    def calculate_text_size(self, text, width):
+        """Calculate the best size for the text to write.
+
+        :param text: the text to write.
+        :param width: the width of the picture.
+        :return: the best size for the text to write.
+        """
+        text_length = len(text)
+        nominal = int(1.5 * width / text_length)
+        return nominal if nominal < 40 else 40
