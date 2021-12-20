@@ -54,7 +54,8 @@ class MemeEngine:
             y_rand = random.randrange(10, image.height - y - 10)
 
             self.draw_text(image, wrapped_text, text_size, (x_rand, y_rand))
-            out_path = f"{self.output_dir}/{random.randint(0, 100000000)}.jpg"
+            ending = img_path.split('.')[-1]
+            out_path = f"{self.output_dir}/{random.randint(0, 100000000)}.{ending}"
             image.save(out_path)
             return out_path
 
