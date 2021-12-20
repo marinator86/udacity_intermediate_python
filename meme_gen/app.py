@@ -54,7 +54,18 @@ def meme_post():
     image_url = request.form.get('image_url')
     body = request.form.get('body')
     author = request.form.get('author')
-    response = requests.get(image_url, allow_redirects=True)
+
+    if not body:
+        quote = random.choice(quotes)
+        body = quote.body
+        author = quote.author
+
+    try:
+        response = requests.get(image_url, allow_redirects=True)
+    except Exception as e:
+        error_msg = f"Error loading image: {e}"
+        return render_template('error.html', message=error_msg)
+
     tmp = f'./tmp/{random.randint(0, 100000000)}.png'
     with open(tmp, 'wb') as temp_file:
         temp_file.write(response.content)
